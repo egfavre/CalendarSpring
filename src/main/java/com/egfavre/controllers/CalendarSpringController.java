@@ -31,7 +31,10 @@ public class CalendarSpringController {
     @RequestMapping (path = "/", method = RequestMethod.GET)
     public String home (HttpSession session, Model model){
         String username = (String) session.getAttribute("username");
+
         model.addAttribute("username", username);
+        model.addAttribute("events", events.findAll());
+        model.addAttribute("now", LocalDateTime.now());
         return "home";
     }
 
@@ -56,11 +59,12 @@ public class CalendarSpringController {
         return "redirect:/";
     }
 
-    @RequestMapping(path = "/create-event" method = RequestMethod.POST)
+    @RequestMapping(path = "/create-event", method = RequestMethod.POST)
     public String createEvent (HttpSession session, String description, String time){
         String username = (String) session.getAttribute("username");
         User user = users.findByName(username);
         Events event = new Events (description, LocalDateTime.parse(time), user);
+        events.save(event);
         return "redirect:/";
     }
 }

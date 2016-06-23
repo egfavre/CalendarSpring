@@ -25,9 +25,13 @@ Hello, {{.}}
 
 <form action="create-event" method="post">
     <input type="text" name="description" placeholder="Description"/>
-    <input type="datetime-local" name="time"/>
+    <input type="datetime-local" name="time" value="{{now}}"/>
     <button type="submit">Create Event</button>
 </form>
 {{/username}}
+
+{{#events}}
+{{description}} : {{time}} <br>
+{{/events}}
 </body>
 </html>
